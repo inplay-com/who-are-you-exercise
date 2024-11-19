@@ -1,0 +1,22 @@
+{
+  "name": "who-are-you",
+  "version": "1.0.0",
+  "description": "A game about trying to guess who a football player is.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mongodb": "docker run -d -p 27017:27017 --name local-mongo -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=password -e MONGO_INITDB_DATABASE=staging -v $(pwd)/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d -v $(pwd)/initial-data:/initial-data mongo:6.0.19",
+    "mongodb:stop": "docker stop local-mongo && docker rm local-mongo"
+  },
+  "author": "Inplay",
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "@types/node": "^18.19.64",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "express": "^4.21.1"
+  }
+}
