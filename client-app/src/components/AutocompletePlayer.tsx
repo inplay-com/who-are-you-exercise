@@ -5,11 +5,12 @@ import Typography from '@mui/material/Typography';
 import { debounce } from '@mui/material/utils';
 import { Avatar } from '@mui/material';
 import { Player } from '../types/player';
-import { PlayerWithResult } from '../types/player.results';
 import { getFilteredPlayerList, getPlayerResultOnGues } from '../api/playersApi';
 import { stringToColor } from '../utils/utils';
-import ResultCard from './ResultCard';
+import { PlayerWithResult } from '../types/player.results';
 import { usePlayerContext } from '../contexts/PlayerContext';
+import ResultList from './ResultList';
+import { useGameContext } from '../contexts/GameContext';
 
 
 const AutocompletePlayer = () => {
@@ -18,7 +19,8 @@ const AutocompletePlayer = () => {
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<readonly Player[]>([]);
   const [results, setResults] = React.useState<readonly PlayerWithResult[]>([]);
-  const { setPlayer } = usePlayerContext();
+  const { player, setPlayer } = usePlayerContext();
+  const { game, setGame } = useGameContext();
 
   const getPlayersByFilter = React.useMemo(
     () =>
@@ -37,7 +39,7 @@ const AutocompletePlayer = () => {
         const resultsData = await getPlayerResultOnGues(playerId);
         setResults(resultsData);
         if (resultsData.length && resultsData[0].result.status === true) {
-          console.log("I Found the match, no i have to update the data")
+          console.log("I Found the match, now i have to update the data")
           const selectedPlayer = resultsData[0] as Player
           console.log(" selected player is ", selectedPlayer)
           selectedPlayer.isFinished = true
@@ -57,12 +59,30 @@ const AutocompletePlayer = () => {
     getPlayersByFilter(inputValue);
   }, [inputValue, getPlayersByFilter]);
 
+  React.useEffect(() => {
+    if (game) {
+      console.log("Game is over")
+      setResults([])
+      setOptions([])
+      setInputValue('')
+      setValue(null)
+      setGame(false)
+    }
+  }, [game, setOptions, setResults, setInputValue, setValue, setGame]);
+
   // Fetch results based on selected player
   React.useEffect(() => {
     if (value) {
       fetchPlayerResults(value.id);
     }
   }, [value, fetchPlayerResults]);
+
+  // Fetch results based on selected player
+  React.useEffect(() => {
+    if (player) {
+      console.log("playe is returned", player)
+    }
+  }, [player]);
 
   return (
     <div>
@@ -103,12 +123,7 @@ const AutocompletePlayer = () => {
         )}
       />
       <div>
-        <h1>Results</h1>
-        {results.length === 0 ? (
-          <p>No results to display.</p>
-        ) : (
-          results.map((result) => <ResultCard key={result.id} result={result} />)
-        )}
+        <ResultList resultData={results}></ResultList>
       </div>
     </div>
   );

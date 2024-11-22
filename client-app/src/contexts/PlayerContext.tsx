@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import { Player } from '../types/player';
+import { getPlayers } from '../api/playersApi';
 
 type PlayerContextType = {
   player: Player | undefined;
@@ -10,9 +11,9 @@ type PlayerContextType = {
 
 const PlayerContext = createContext<PlayerContextType>({
   player: undefined,
-  setPlayer: () => {},
+  setPlayer: () => { },
   players: [],
-  loadPlayers: () => {},
+  loadPlayers: () => { },
 });
 
 export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -20,8 +21,8 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [players, setPlayers] = useState<Player[]>([]);
 
   const loadPlayers = async () => {
-    // Fetch or populate players logic here
-    setPlayers([]); // Replace with actual logic
+    const players = await getPlayers()
+    setPlayers(players); // Replace with actual logic
   };
 
   return (

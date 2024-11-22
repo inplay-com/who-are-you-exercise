@@ -4,15 +4,17 @@ import Button from '@mui/material/Button';
 import { usePlayerContext } from '../contexts/PlayerContext';
 import AutocompletePlayer from './AutocompletePlayer';
 import { Player } from '../types/player';
+import { useGameContext } from '../contexts/GameContext';
 
 
 const PlayerOfTheDay: React.FC = () => {
     const { player, setPlayer } = usePlayerContext();
+    const { game, setGame } = useGameContext();
 
     const resetTheGame = async () => {
         console.log("I'm about to rest the game")
         await resetTheSession()
-
+        setGame(true)
         setTimeout(async () => {
             try {
                 const data = await getPlayerOfTheDay();
@@ -63,8 +65,6 @@ const PlayerOfTheDay: React.FC = () => {
                         </div>
                         <Button variant="contained" onClick={resetTheGame}>Start again</Button>
                     </div>
-
-
                 ) : (<div></div>)}
             </div>
         </div>

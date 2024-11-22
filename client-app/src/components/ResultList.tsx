@@ -1,19 +1,19 @@
-import { PlayerWithResult } from "../types/player.results";
+import { PlayerWithResult } from '../types/player.results';
 import ResultCard from "./ResultCard";
 
 
 interface ResultListProps {
-    results: PlayerWithResult[];
+    resultData: readonly PlayerWithResult[];
 }
 
-const ResultList: React.FC<ResultListProps> = ({ results }) => {
+const ResultList: React.FC<ResultListProps> = ({ resultData }) => {
     return (
         <div className="player-list">
             <h1>Results </h1>
-            {results.length === 0 ? (
-                <p>Loading results...</p>
+            {resultData.length === 0 ? (
+                <p></p>
             ) : (
-                results.map((result,index) => <ResultCard key={index} result={result} />)
+                resultData.map((result, index) => <ResultCard key={index} result={result} />)
             )}
         </div>
     );
