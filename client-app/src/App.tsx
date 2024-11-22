@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { PlayerProvider } from './contexts/PlayerContext';
-import { GameProvider, useGameContext } from './contexts/GameContext';
+import { GameProvider } from './contexts/GameContext';
 import PlayerOfTheDay from './components/PlayerOfTheDay';
 import PlayerList from './components/PlayerList';
-import TeamList from './components/TeamList';
 
 const App: React.FC = () => {
     return (

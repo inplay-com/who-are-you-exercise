@@ -1,4 +1,4 @@
-import { Avatar, Fab, Typography } from "@mui/material";
+import { Avatar, Typography } from "@mui/material";
 import { PlayerWithResult } from "../types/player.results";
 import { green, red } from '@mui/material/colors';
 import ArrowIcon from "./ArrowIcon";

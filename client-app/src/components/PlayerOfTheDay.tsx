@@ -9,7 +9,7 @@ import { useGameContext } from '../contexts/GameContext';
 
 const PlayerOfTheDay: React.FC = () => {
     const { player, setPlayer } = usePlayerContext();
-    const { game, setGame } = useGameContext();
+    const { setGame } = useGameContext();
 
     const resetTheGame = async () => {
         console.log("I'm about to rest the game")
