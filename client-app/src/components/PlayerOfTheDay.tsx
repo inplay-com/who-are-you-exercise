@@ -3,6 +3,7 @@ import { getPlayerOfTheDay, resetTheSession } from '../api/playersApi';
 import Button from '@mui/material/Button';
 import { usePlayerContext } from '../contexts/PlayerContext';
 import AutocompletePlayer from './AutocompletePlayer';
+import { Player } from '../types/player';
 
 
 const PlayerOfTheDay: React.FC = () => {
@@ -44,10 +45,14 @@ const PlayerOfTheDay: React.FC = () => {
         fetchPlayerOfTheDay();
     }, []);
 
+    const getImage = (player: Player): string => {
+        return !player.isFinished ? player.imagePathBase64 : player.imagePath
+    }
+
     return (
         <div className="player-of-the-day">
             <h2>Player of The day</h2>
-            <img alt='Player Photo' width="300" src={player?.imagePath} />
+            {player ? (<img alt='Player Photo' width="300" src={getImage(player)} />) : (<div></div>)}
             <br></br>
             <div>
                 <AutocompletePlayer />
