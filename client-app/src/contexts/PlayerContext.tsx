@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
 import { Player } from '../types/player';
 import { getPlayers } from '../api/playersApi';
 
@@ -20,13 +20,23 @@ export const PlayerProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const [player, setPlayer] = useState<Player | undefined>();
   const [players, setPlayers] = useState<Player[]>([]);
 
-  const loadPlayers = async () => {
+  const loadPlayers = useCallback(async () => {
     const players = await getPlayers()
     setPlayers(players); // Replace with actual logic
-  };
+  }, []);
+
+  const value = useMemo(
+    () => ({
+      player,
+      setPlayer,
+      players,
+      loadPlayers,
+    }),
+    [player, players, loadPlayers]
+  );
 
   return (
-    <PlayerContext.Provider value={{ player, setPlayer, players, loadPlayers }}>
+    <PlayerContext.Provider value={value}>
       {children}
     </PlayerContext.Provider>
   );

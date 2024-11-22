@@ -7,8 +7,11 @@ const PlayerList: React.FC = () => {
     const { players, loadPlayers } = usePlayerContext();
     const { hint } = useGameContext();
 
-    useEffect(() => { loadPlayers() }, [loadPlayers]);
-
+    useEffect(() => {
+        if (!players || players.length === 0) {
+            loadPlayers()
+        }
+    }, [loadPlayers, players]);
 
     return (
         <div className="player-list">
