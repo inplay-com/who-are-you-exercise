@@ -1,3 +1,4 @@
+import { Nationality } from "./nationality";
 import { Team } from "./team";
 
 export interface Player {
@@ -7,5 +8,6 @@ export interface Player {
   imagePath: string;
   team: Team
   isFinished: boolean,
-  imagePathBase64: string
+  imagePathBase64: string,
+  nationality: Nationality,
 }

@@ -7,9 +7,4 @@ export interface PlayerWithResult extends Player {
   age: number;
   detailedPositionId: string;
   positionId: number;
-  nationality: {
-    name: string;
-    nationalityImagePath: string;
-    nationalityId: number;
-  };
 }

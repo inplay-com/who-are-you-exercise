@@ -37,7 +37,7 @@ const AutocompletePlayer = () => {
       debounce(async (playerId: string) => {
         if (!playerId) return;
         const resultsData = await getPlayerResultOnGues(playerId);
-        setResults(resultsData);
+        setResults(resultsData.reverse());
         if (resultsData.length && resultsData[0].result.status === true) {
           console.log("I Found the match, now i have to update the data")
           const selectedPlayer = resultsData[0] as Player
