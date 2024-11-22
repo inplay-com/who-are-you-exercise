@@ -43,7 +43,7 @@ const PlayerOfTheDay: React.FC = () => {
             }
         };
         fetchPlayerOfTheDay();
-    }, []);
+    }, [setPlayer]);
 
     const getImage = (player: Player): string => {
         return !player.isFinished ? player.imagePathBase64 : player.imagePath
@@ -52,7 +52,7 @@ const PlayerOfTheDay: React.FC = () => {
     return (
         <div className="player-of-the-day">
             <h2>Player of The day</h2>
-            {player ? (<img alt='Player Photo' width="300" src={getImage(player)} />) : (<div></div>)}
+            {player ? (<img alt='Player of the day' width="300" src={getImage(player)} />) : (<div></div>)}
             <br></br>
             <div>
                 <AutocompletePlayer />

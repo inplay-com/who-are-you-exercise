@@ -44,7 +44,7 @@ const AutocompletePlayer = () => {
           setPlayer(selectedPlayer)
         }
       }, 400),
-    []
+    [setPlayer]
   );
 
   // Fetch filtered players based on input value
