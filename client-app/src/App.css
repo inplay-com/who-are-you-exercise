@@ -29,3 +29,15 @@
   .result-text{
     font-weight: bold;
   }
+
+  .player-list{
+    position: absolute;
+    height: 100%;
+    top: 0;
+    overflow: auto;
+  }
+
+  .result-list{
+    height: 300px;
+    overflow: auto;
+  }

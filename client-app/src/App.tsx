@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import { PlayerProvider } from './contexts/PlayerContext';
-import { GameProvider } from './contexts/GameContext';
+import { GameProvider, useGameContext } from './contexts/GameContext';
 import PlayerOfTheDay from './components/PlayerOfTheDay';
+import PlayerList from './components/PlayerList';
+import TeamList from './components/TeamList';
 
 const App: React.FC = () => {
     return (
@@ -11,13 +13,12 @@ const App: React.FC = () => {
                 <div className="App parent">
                     <div className="child">
                         <h1>Who Are You</h1>
-                        {/* <TeamList />
-                    <PlayerList /> */}
                         <br></br>
                         <PlayerOfTheDay />
                         <br></br>
                     </div>
                 </div>
+                <PlayerList />
             </PlayerProvider>
         </GameProvider>
     );

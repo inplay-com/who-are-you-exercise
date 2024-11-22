@@ -7,7 +7,6 @@ export default session({
     cookie: {
         httpOnly: true,
         maxAge: 1000 * 60 * 60 * 24, // Session duration 1 day
-        sameSite: 'none', // Cross-origin requests
     },
 })
 

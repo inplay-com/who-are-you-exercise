@@ -38,12 +38,7 @@ export const resetTheSession = async (): Promise<Player> => {
 export const getPlayerResultOnGues = async (id: string): Promise<PlayerWithResult[] | any> => {
   try {
     console.log("path", `/game/make-gues/${id}`)
-    const response = await service.get(`/game/make-gues/${id}`, {
-      withCredentials: true,
-      headers: {
-        'Content-Type': 'application/json',
-      }
-    });
+    const response = await service.get(`/game/make-gues/${id}`);
     console.log("getPlayerResultOnGues before ", response.data)
     return response.data;
   } catch (error) {
