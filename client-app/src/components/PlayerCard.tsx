@@ -22,9 +22,13 @@ const PlayerCard: React.FC<PlayerCardProps> = ({ player }) => {
                             {player.name}
                         </Typography>
                         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                            <p>Team: {player.team.name}</p>
-                            <p>Nationality: {player.nationality.name}</p>
-                            <p>Position: {player.position}</p>
+                            Team: {player.team.name}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            Nationality: {player.nationality.name}
+                        </Typography>
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+                            Position: {player.position}
                         </Typography>
                     </CardContent>
                 </CardActionArea>
