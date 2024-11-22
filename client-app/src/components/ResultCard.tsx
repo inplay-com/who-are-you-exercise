@@ -1,9 +1,9 @@
-import { Avatar, Fab } from "@mui/material";
+import { Avatar, Fab, Typography } from "@mui/material";
 import { PlayerWithResult } from "../types/player.results";
 import { green, red } from '@mui/material/colors';
 import ArrowIcon from "./ArrowIcon";
 import React from "react";
-import { useGameContext } from "../contexts/GameContext";
+
 
 interface ResultCardProps {
     result: PlayerWithResult;
@@ -31,6 +31,10 @@ const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
 
     return (
         <div>
+            <Typography variant="button" gutterBottom sx={{ display: 'block' }}>
+                {result.name}
+            </Typography>
+            <div></div>
             <div className='result-info'>
                 <div className="result-circle-holder">
                     <Avatar src={result.nationality.nationalityImagePath} sx={{ width: 50, height: 50, bgcolor: getResultColor(result.result.nationalityIsCorrect), padding: '10px' }}></Avatar>
