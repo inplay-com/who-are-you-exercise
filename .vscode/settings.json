@@ -19,5 +19,8 @@
   "[scss]": {
     "editor.defaultFormatter": "vscode.css-language-features"
   },
-  "prettier.configPath": "./.prettierrc.yml"
+  "prettier.configPath": "./.prettierrc.yml",
+  "[typescript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  }
 }
