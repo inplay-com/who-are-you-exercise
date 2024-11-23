@@ -5,6 +5,7 @@ import { usePlayerContext } from '../contexts/PlayerContext';
 import AutocompletePlayer from './AutocompletePlayer';
 import { Player } from '../types/player';
 import { useGameContext } from '../contexts/GameContext';
+import { Typography } from '@mui/material';
 
 
 const PlayerOfTheDay: React.FC = () => {
@@ -53,7 +54,9 @@ const PlayerOfTheDay: React.FC = () => {
 
     return (
         <div className="player-of-the-day">
-            <h2>Player of The day</h2>
+            <Typography variant="h5" component="div">
+                Player of The day
+            </Typography>
             {player ? (<img alt='Player of the day' width="300" src={getImage(player)} />) : (<div></div>)}
             <br></br>
             <div>

@@ -1,4 +1,4 @@
-import { Fab } from '@mui/material';
+import { Fab, Typography } from '@mui/material';
 import { PlayerWithResult } from '../types/player.results';
 import ResultCard from "./ResultCard";
 import { useGameContext } from '../contexts/GameContext';
@@ -17,17 +17,21 @@ const ResultList: React.FC<ResultListProps> = ({ resultData }) => {
 
     return (
         <div className="result-list">
-            <div>
-                <h1>Results </h1>
-                {<Fab onClick={displayPlayers} sx={{ width: 50, height: 50 }} color="primary" >
-                    {!hint ? 'Help' : 'Close'}
-                </Fab>}
-            </div>
-            {resultData.length === 0 ? (
-                <p></p>
-            ) : (
-                resultData.map((result, index) => <ResultCard key={index} result={result} />)
-            )}
+            {
+                !!resultData.length &&
+                <div>
+                    <Typography gutterBottom variant="h6" component="div">
+                        {resultData.length} Result{resultData.length > 1 && 's'}
+                    </Typography>
+
+                    <Fab onClick={displayPlayers} sx={{ width: 50, height: 50 }} color="primary" >
+                        {!hint ? 'Help' : 'Close'}
+                    </Fab>
+                </div>
+            }
+            {
+                !!resultData.length && resultData.map((result, index) => <ResultCard key={index} result={result} />)
+            }
         </div>
     );
 };
