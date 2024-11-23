@@ -37,10 +37,11 @@ const prepareCorrectGuesResult = (playerOfTheDay: IPlayer) => {
 
 const prepareWrongGuesResult = async (playerOfTheDay: IPlayer, selectedPlayer: IPlayer) => {
     const player = selectedPlayer.getPlayerInfo()
+    const todayPlayer = playerOfTheDay.getPlayerInfo()
     const yearIsCorrect = selectedPlayer.comparePlayerYears(playerOfTheDay)
-    const nationalityIsCorrect = player.nationalityId === playerOfTheDay.nationalityId
-    const isTeamCorrect = player.team === playerOfTheDay.team
-    const isPositionCorrect = player.positionId === playerOfTheDay.positionId
+    const nationalityIsCorrect = player?.nationality?.nationalityId == todayPlayer?.nationality?.nationalityId
+    const isTeamCorrect = player?.team?.id == todayPlayer?.team?.id
+    const isPositionCorrect = player?.positionId === todayPlayer?.positionId
     const { imagePath, ...playerWithoutImage } = player;
     return {
         result: {

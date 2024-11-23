@@ -27,26 +27,32 @@ export interface IPlayer extends Document {
   deleted: boolean;
   team: ITeam['_id'];
   isStarred: boolean;
-  bluredImage: any|Buffer;
+  bluredImage: any | Buffer;
   age: number;
   calculateYears(): number,
-  getPosition(): string |null,
-  getNationality(): string |null,
-  getPlayerInfo(): IPlayerInfo,
-  comparePlayerYears(player:IPlayer): number,
+  getPosition(): string | null,
+  getNationality(): string | null,
+  getPlayerInfo(): IPlayerResource,
+  comparePlayerYears(player: IPlayer): number,
 }
 
 export interface IPlayerInfo {
-  team: ITeam, 
-  name: string, 
-  age:number,
-  detailedPositionId: string | null, 
-  positionId: number, 
-  id: number, 
-  nationalityId: number | null, 
+  team: ITeam,
+  name: string,
+  age: number,
+  detailedPositionId: string | null,
+  positionId: number,
+  id: number,
+  nationalityId: number | null,
   teamPosition: string | null,
-  imagePath:string | null,
-  imagePathBase64:string,
+  imagePath: string | null,
+  imagePathBase64: string,
+}
+
+export interface INationality {
+  nationalityId: number | null
+  nationalityImagePath: string | null,
+  name: string
 }
 
 export interface IPlayerResource {
@@ -56,12 +62,9 @@ export interface IPlayerResource {
   position: string,
   positionId: number,
   id: number,
-  imagePath:string | null
-  nationality: {
-    nationalityId: number | null
-    nationalityImagePath: string | null,
-    name: string
-  }
+  imagePath: string | null
+  nationality: INationality,
+  imagePathBase64: string,
   team: ITeamResource
 }
 
@@ -123,43 +126,48 @@ PlayerSchema.methods.getNationalityImage = function (): string | null {
   return nationality ? `${nationalityImagePath}${nationality}.svg` : ""
 }
 
-PlayerSchema.methods.comparePlayerYears = function (player:IPlayer): number {
+PlayerSchema.methods.comparePlayerYears = function (player: IPlayer): number {
   //return -1 if selected player is younger
   //return 0 if selected player is same age as the comapred player
   //return 1 if selected player is older
   return Math.sign(player.calculateYears() - this.calculateYears())
 }
 
-PlayerSchema.post('findOne', function (doc:IPlayer|null) {
-  if(doc){
-    doc.age= doc.calculateYears()
+PlayerSchema.methods.getNationalityInfo = function (): INationality {
+  return {
+    name: this.getNationalityName(),
+    nationalityImagePath: this.getNationalityImage(),
+    nationalityId: this.nationalityId
+  }
+}
+
+PlayerSchema.post('findOne', function (doc: IPlayer | null) {
+  if (doc) {
+    doc.age = doc.calculateYears()
   }
 });
 
-PlayerSchema.post('find', function (docs:IPlayer[]) {
+PlayerSchema.post('find', function (docs: IPlayer[]) {
   docs.forEach(doc => {
     if (doc) {
-      doc.age= doc.calculateYears()
+      doc.age = doc.calculateYears()
     }
   })
 })
 
 PlayerSchema.methods.getPlayerInfo = function (): IPlayerResource {
-  const { team, name, detailedPositionId, positionId, id, nationalityId, teamPosition, imagePath }: IPlayerInfo = this as IPlayerInfo
+  const { team, name, detailedPositionId, positionId, id, imagePath, imagePathBase64 }: IPlayerInfo = this as IPlayerInfo
   return {
     id,
     name,
-    age:this.calculateYears(),
+    age: this.calculateYears(),
     detailedPositionId,
     position: this.getPosition(),
     positionId,
     imagePath,
-    nationality: {
-      name: this.getNationalityName(),
-      nationalityImagePath: this.getNationalityImage(),
-      nationalityId,
-    },
-    team: team.getTeamInfo()
+    nationality: this.getNationalityInfo(),
+    team: team.getTeamInfo(),
+    imagePathBase64
   }
 }
 

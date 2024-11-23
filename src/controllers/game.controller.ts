@@ -8,7 +8,7 @@ import { generateBase64ImageFromBuffer, getBuferFromImage } from '../utils/image
 
 const getImageDataForThePlayer = (playerOfTheDay: IPlayer) => {
     //if the image is not from redis cache, then the blured image is Buffer otherwise is object with data param
-   return playerOfTheDay.bluredImage instanceof Buffer ? playerOfTheDay.bluredImage : playerOfTheDay.bluredImage.data;
+    return playerOfTheDay.bluredImage instanceof Buffer ? playerOfTheDay.bluredImage : playerOfTheDay.bluredImage.data;
 }
 
 const getPlayerOfTheDay = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
@@ -18,7 +18,7 @@ const getPlayerOfTheDay = async (req: Request, res: Response, next: NextFunction
         player.team = new Team(playerOfTheDay.team)
         const playerWithImage = player.getPlayerInfo()
         const imageDataToGenerate = getImageDataForThePlayer(playerOfTheDay)
-        const base64DataUrl =  generateBase64ImageFromBuffer(imageDataToGenerate)
+        const base64DataUrl = generateBase64ImageFromBuffer(imageDataToGenerate)
         playerWithImage.imagePathBase64 = base64DataUrl
         const serverPath = `${req.protocol}://${req.get('host')}`;
         playerWithImage.imagePath = `${serverPath}/api/game/image`
@@ -28,7 +28,7 @@ const getPlayerOfTheDay = async (req: Request, res: Response, next: NextFunction
     }
 };
 
-const pushPlayerInSesionIfIsNotAlreadyAndGetSessionResults = (req: Request,id:string,result:any)=>{
+const pushPlayerInSesionIfIsNotAlreadyAndGetSessionResults = (req: Request, id: string, result: any) => {
     if (!req.session.userGueses) {
         req.session.userGueses = [];
     }
@@ -44,15 +44,17 @@ const guesThePlayer = async (req: Request, res: Response, next: NextFunction): P
 
         const playerOfTheDayState: IPlayer = await gameService.getPlayerOfTheDay();
         const playerOfTheDay = new Player(playerOfTheDayState)
-        playerOfTheDay.team = new Team(playerOfTheDay.team)
+        playerOfTheDay.team = new Team(playerOfTheDayState.team)
+
         if (playerOfTheDay.id === id) {
             playerOfTheDay.imagePath = selectedPlayer.imagePath
             const result = gameService.prepareCorrectGuesResult(playerOfTheDay)
-            const results = pushPlayerInSesionIfIsNotAlreadyAndGetSessionResults(req,id,result)
+            const results = pushPlayerInSesionIfIsNotAlreadyAndGetSessionResults(req, id, result)
             return res.status(200).json(results);
         }
+
         const result = await gameService.prepareWrongGuesResult(playerOfTheDay, selectedPlayer)
-        const results = pushPlayerInSesionIfIsNotAlreadyAndGetSessionResults(req,id,result)
+        const results = pushPlayerInSesionIfIsNotAlreadyAndGetSessionResults(req, id, result)
         return res.status(200).json(results);
     } catch (error) {
         return next(error);
