@@ -14,21 +14,6 @@ const getResultColor = (correct: boolean) => {
 };
 
 const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
-
-    React.useEffect(() => {
-        if (result) {
-            console.log("result is ", result)
-            return;
-        }
-    }, [result,]);
-
-    React.useEffect(() => {
-        if (result) {
-            console.log("result is ", result)
-            return;
-        }
-    }, [result,]);
-
     return (
         <div>
             <Typography variant="button" gutterBottom sx={{ display: 'block' }}>

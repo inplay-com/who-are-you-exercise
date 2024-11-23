@@ -1,17 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { usePlayerContext } from '../contexts/PlayerContext';
 import PlayerCard from './PlayerCard';
 import { useGameContext } from '../contexts/GameContext';
 
 const PlayerList: React.FC = () => {
     const { players, loadPlayers } = usePlayerContext();
+    const [loaded, setLoaded] = React.useState<boolean>(false);
     const { hint } = useGameContext();
 
-    useEffect(() => {
-        if (!players || players.length === 0) {
+    React.useEffect(() => {
+        if (!loaded) {
             loadPlayers()
+            setLoaded(true)
         }
-    }, [loadPlayers, players]);
+    }, [loadPlayers, players, loaded, setLoaded]);
 
     return (
         <div className="player-list">

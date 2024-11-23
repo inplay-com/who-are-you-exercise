@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { debounce } from '@mui/material/utils';
 import { Avatar } from '@mui/material';
 import { Player } from '../types/player';
-import { getFilteredPlayerList, getPlayerResultOnGues } from '../api/playersApi';
+import { getFilteredPlayerList, getPlayerResultOnGues, getPlayerResults } from '../api/playersApi';
 import { stringToColor } from '../utils/utils';
 import { PlayerWithResult } from '../types/player.results';
 import { usePlayerContext } from '../contexts/PlayerContext';
@@ -19,6 +19,7 @@ const AutocompletePlayer = () => {
   const [inputValue, setInputValue] = React.useState('');
   const [options, setOptions] = React.useState<readonly Player[]>([]);
   const [results, setResults] = React.useState<readonly PlayerWithResult[]>([]);
+  const [loaded, setLoaded] = React.useState<boolean>(false);
   const { player, setPlayer } = usePlayerContext();
   const { game, setGame } = useGameContext();
 
@@ -73,9 +74,19 @@ const AutocompletePlayer = () => {
   // Fetch results based on selected player
   React.useEffect(() => {
     if (value) {
-      fetchPlayerResults(value.id);
+      fetchPlayerResults(value?.id);
     }
   }, [value, fetchPlayerResults]);
+
+  React.useEffect(() => {
+    if (!loaded) {
+      (async () => {
+        const resultsData = await getPlayerResults();
+        setResults(resultsData.reverse());
+        setLoaded(true)
+      })();
+    }
+  }, [value, fetchPlayerResults, getPlayerResults, setResults, results, loaded, setLoaded]);
 
   // Fetch results based on selected player
   React.useEffect(() => {

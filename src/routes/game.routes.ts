@@ -115,5 +115,29 @@ router.get('/clear', gameController.cleaAllStates);
  */
 router.get('/make-gues/:id', gameController.guesThePlayer);
 
+/**
+ * @swagger
+ * /api/game/results:
+ *   get:
+ *     tags:
+ *      - Game
+ *     summary: Retrives all previus gueses from the player if any 
+ *     description: Endpoint to retrieve all user gueses.
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *       500:
+ *         description: Player not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ */
+router.get('/results', gameController.getResults);
+
 
 export default router;

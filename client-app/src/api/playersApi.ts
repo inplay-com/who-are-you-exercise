@@ -47,6 +47,18 @@ export const getPlayerResultOnGues = async (id: string): Promise<PlayerWithResul
   }
 };
 
+export const getPlayerResults = async (): Promise<PlayerWithResult[] | any> => {
+  try {
+    console.log("path", `/game/results/`)
+    const response = await service.get(`/game/results`);
+    console.log("getPlayerResults before ", response.data)
+    return response.data;
+  } catch (error) {
+    console.error('Error getPlayerResults:', error);
+    throw new Error('Could not fetch results');
+  }
+};
+
 export const getFilteredPlayerList = async (search: string): Promise<Player[] | any> => {
   try {
     console.log("path", `/players/find/${search}`)

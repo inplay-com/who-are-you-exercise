@@ -91,6 +91,14 @@ const cleaAllStates = async (req: Request, res: Response, next: NextFunction): P
     }
 };
 
-export default { getPlayerOfTheDay, guesThePlayer, getPlayerOfTheDayOnlyImage, getAllStates, cleaAllStates }
+const getResults = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+    if (!req.session.userGueses) {
+        req.session.userGueses = [];
+    }
+    const results = req.session.userGueses.map(gues => JSON.parse(gues))
+    return res.status(200).json(results);
+};
+
+export default { getPlayerOfTheDay, guesThePlayer, getPlayerOfTheDayOnlyImage, getAllStates, cleaAllStates, getResults }
 
 
